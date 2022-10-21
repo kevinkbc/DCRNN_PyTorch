@@ -1,0 +1,22 @@
+2022-10-19 11:05:06,408 - Baseline - INFO - Log directory: data/model
+2022-10-19 11:05:06,603 - Baseline - INFO - Static
+2022-10-19 11:05:06,603 - Baseline - INFO - Model	Horizon	RMSE	MAPE	MAE
+2022-10-19 11:13:17,465 - Baseline - INFO - Log directory: data/model
+2022-10-19 11:13:17,603 - Baseline - INFO - Static
+2022-10-19 11:13:17,603 - Baseline - INFO - Model	Horizon	RMSE	MAPE	MAE
+2022-10-19 11:13:17,708 - Baseline - INFO - Static	1	6.07	6.84	3.05
+2022-10-19 11:13:17,808 - Baseline - INFO - Static	3	8.69	9.39	4.02
+2022-10-19 11:13:17,907 - Baseline - INFO - Static	6	11.13	12.21	5.09
+2022-10-19 11:13:18,004 - Baseline - INFO - Static	12	14.21	16.71	6.79
+2022-10-19 11:13:21,957 - Baseline - INFO - Historical Average
+2022-10-19 11:13:21,957 - Baseline - INFO - Model	Horizon	RMSE	MAPE	MAE
+2022-10-19 11:13:21,957 - Baseline - INFO - HA	1	7.77	12.90	4.15
+2022-10-19 11:13:21,957 - Baseline - INFO - HA	3	7.77	12.90	4.15
+2022-10-19 11:13:21,958 - Baseline - INFO - HA	6	7.77	12.90	4.15
+2022-10-19 11:13:21,958 - Baseline - INFO - HA	12	7.77	12.90	4.15
+2022-10-19 11:13:28,994 - Baseline - INFO - VAR (lag=3)
+2022-10-19 11:13:28,994 - Baseline - INFO - Model	Horizon	RMSE	MAPE	MAE
+2022-10-19 11:13:29,094 - Baseline - INFO - VAR	1	5.64	7.03	3.17
+2022-10-19 11:13:29,183 - Baseline - INFO - VAR	3	7.78	10.08	4.37
+2022-10-19 11:13:29,273 - Baseline - INFO - VAR	6	9.37	12.75	5.40
+2022-10-19 11:13:29,357 - Baseline - INFO - VAR	12	10.68	15.84	6.50
