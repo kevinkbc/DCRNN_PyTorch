@@ -26,7 +26,9 @@ def generate_graph_seq2seq_io_data(
     """
 
     num_samples, num_nodes = df.shape
+    
     data = np.expand_dims(df.values, axis=-1)
+    data = np.array(data,dtype=np.double)
     data_list = [data]
     if add_time_in_day:
         time_ind = (df.index.values - df.index.values.astype("datetime64[D]")) / np.timedelta64(1, "D")
@@ -58,17 +60,17 @@ def generate_train_val_test(args):
     # 0 is the latest observed sample.
     x_offsets = np.sort(
         # np.concatenate(([-week_size + 1, -day_size + 1], np.arange(-11, 1, 1)))
-        np.concatenate((np.arange(-11, 1, 1),))
+        np.concatenate((np.arange(-5, 1, 1),))
     )
     # Predict the next one hour
-    y_offsets = np.sort(np.arange(1, 13, 1))
+    y_offsets = np.sort(np.arange(1, 7, 1))
     # x: (num_samples, input_length, num_nodes, input_dim)
     # y: (num_samples, output_length, num_nodes, output_dim)
     x, y = generate_graph_seq2seq_io_data(
         df,
         x_offsets=x_offsets,
         y_offsets=y_offsets,
-        add_time_in_day=True,
+        add_time_in_day=False,
         add_day_in_week=False,
     )
 
@@ -116,7 +118,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--traffic_df_filename",
         type=str,
-        default="data/metr-la.h5",
+        default="data/crypto_log_return.h5",
         help="Raw traffic readings.",
     )
     args = parser.parse_args()

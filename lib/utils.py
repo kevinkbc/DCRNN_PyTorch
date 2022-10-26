@@ -5,6 +5,7 @@ import pickle
 import scipy.sparse as sp
 import sys
 import tensorflow as tf
+import torch
 
 from scipy.sparse import linalg
 
@@ -60,10 +61,20 @@ class StandardScaler:
 
     def transform(self, data):
         return (data - self.mean) / self.std
+        #return (data.toCpu() - self.mean) / self.std
+        #return data
 
     def inverse_transform(self, data):
+        #return (data * self.std) + self.mean
+        if (type(data)==torch.Tensor):
+            #data2 = data.permute(1,0,2)
+            #transformed = (data2.cpu() * self.std) + self.mean
+            std = torch.tensor(self.std)
+            mean = torch.tensor(self.mean)
+            return (data.cpu() * std) + mean 
+            #return transformed.permute(1,0,2)
         return (data * self.std) + self.mean
-
+        #return data
 
 def add_simple_summary(writer, names, values, global_step):
     """
@@ -99,6 +110,10 @@ def calculate_normalized_laplacian(adj):
 
 
 def calculate_random_walk_matrix(adj_mx):
+    # print("calculate random walk")
+    # adj_mx = adj_mx / 1.0
+    # print(adj_mx.shape)
+    # print(adj_mx)
     adj_mx = sp.coo_matrix(adj_mx)
     d = np.array(adj_mx.sum(1))
     d_inv = np.power(d, -1).flatten()
@@ -181,7 +196,18 @@ def load_dataset(dataset_dir, batch_size, test_batch_size=None, **kwargs):
         cat_data = np.load(os.path.join(dataset_dir, category + '.npz'))
         data['x_' + category] = cat_data['x']
         data['y_' + category] = cat_data['y']
-    scaler = StandardScaler(mean=data['x_train'][..., 0].mean(), std=data['x_train'][..., 0].std())
+    
+    #scaler = StandardScaler(mean=data['x_train'][..., 0].mean(), std=data['x_train'][..., 0].std())
+    print(data['x_train'][:, 0, : , 0].shape)
+    scaler = StandardScaler(mean=data['x_train'][:, 0, : , 0].mean(axis=0), std=data['x_train'][:, 0, : , 0].std(axis=0))
+    print("debug")
+    #print(['x_train'][..., 0].mean)
+    print(type(data['x_train'][:, 0, : , 0]))
+    
+    print("scaler mean e std")
+    print(scaler.mean)
+    print(scaler.std)
+
     # Data format
     for category in ['train', 'val', 'test']:
         data['x_' + category][..., 0] = scaler.transform(data['x_' + category][..., 0])

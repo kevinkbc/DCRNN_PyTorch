@@ -15,6 +15,8 @@ def run_dcrnn(args):
         graph_pkl_filename = supervisor_config['data'].get('graph_pkl_filename')
         sensor_ids, sensor_id_to_ind, adj_mx = load_graph_data(graph_pkl_filename)
 
+        #adj_mx = np.array(adj_mx, dtype="float32")
+
         supervisor = DCRNNSupervisor(adj_mx=adj_mx, **supervisor_config)
         mean_score, outputs = supervisor.evaluate('test')
         np.savez_compressed(args.output_filename, **outputs)

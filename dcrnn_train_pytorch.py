@@ -4,17 +4,20 @@ from __future__ import print_function
 
 import argparse
 import yaml
-
+import numpy as np
 from lib.utils import load_graph_data
 from model.pytorch.dcrnn_supervisor import DCRNNSupervisor
 
 
 def main(args):
+    #print(f"config file: {args.config_filename}")
     with open(args.config_filename) as f:
         supervisor_config = yaml.load(f,Loader=yaml.Loader)
 
         graph_pkl_filename = supervisor_config['data'].get('graph_pkl_filename')
         sensor_ids, sensor_id_to_ind, adj_mx = load_graph_data(graph_pkl_filename)
+        
+        #adj_mx = np.array(adj_mx, dtype="float32")
 
         supervisor = DCRNNSupervisor(adj_mx=adj_mx, **supervisor_config)
 
